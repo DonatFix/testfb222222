@@ -1,0 +1,770 @@
+products_id = '';
+updateObj = null;
+refreshObj = null;
+generateObj = null;
+calculateObj = null;
+refreshPosObj = null;
+$ = jQuery;
+
+// $.noConflict();
+// jQuery.noConflict();
+//jquery
+function popupWindow(url) {
+    window.open(url,'popupWindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,width=380,height=380,screenX=150,screenY=150,top=150,left=150')
+}
+	
+function popupInformation(anker) {
+    window.open('/attribute/help.html#' + anker,'Informationen','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=500,height=500,screenX=150,screenY=150,top=150,left=150')
+}
+
+/* update text and images of the product for the models */        
+function updateData() {	
+
+    products_id =$('#products_id').val();
+    //    products_id = 569527; 
+    // alert(products_id);
+    if (updateObj && !updateObj._complete) updateObj.transport.abort();	
+		
+    updateObj = new Ajax.Request('attribute/product_info_ajax.php', {
+        method: 'post',
+        asynchronous: false,
+        parameters: {
+            action: 'updateData',
+            products_id: products_id
+        },
+        onSuccess: function(transport) {
+
+            var model = transport.responseText.evalJSON();
+	
+	    // get name and version brousers
+            var browser = browserDetectNav();
+	    // set description
+            var kontakt_box = document.getElementsByClassName('kontakt_box_desc')[0];
+            document.getElementsByClassName('main_description')[0].innerHTML = model.description;
+            document.getElementsByClassName('main_description')[0].appendChild(kontakt_box);
+
+            if (model.images) {
+                document.getElementsByClassName('productImage')[0].src = "out/pictures/" + model.images[0];
+            }
+            // set subagreement
+            document.getElementById('subagreement').innerHTML = model.subagreement;
+			
+            //set defoult count minQuantity
+            $('#quantity1').attr("value", model.minQuantity);           
+
+                 //set mengenrabattstaffel
+            $('#mengenrabattstaffel').html(model.mengenrabattstaffel);   
+            
+            // get the options 
+            //$('attributes').innerHTML = '';
+            document.getElementById('attributes').innerHTML = '';
+					
+            var table = document.createElement("table");
+
+            for (var i = 0; i < model.attributes.length; i++) {
+                var divinner = document.createElement("div");
+                var label = document.createElement("label");
+                label.appendChild(document.createTextNode(model.attributes[i][0] + ':'));
+                if(browser[0]=='MSIE' && browser[1]>=9){
+                    var select = document.createElement("select");
+                }else{
+                    var select = (document.all && !window.opera)? document.createElement('<select name="id[' + model.attributes[i][1] + ']" ></select>') :document.createElement("select");
+                }
+                divinner.appendChild(label);
+                select.name = 'id[' + model.attributes[i][1] + ']';
+                select.id = 'farbe';
+                select.setAttribute("width", "130px");
+                for (var j = 0; j < model.attributes[i][2].length; j++)
+                {
+                    var option = new Option(model.attributes[i][2][j][1], model.attributes[i][2][j][0]);
+                    select.options[select.length] = option;
+                }
+                divinner.appendChild(select);
+                divinner.appendChild(table);
+                document.getElementById('attributes').appendChild(divinner);
+            }
+
+				
+            //alert('isProductWithoutPrinting='+model.isProductWithPrinting);
+ 
+            attributes_AdvertisingPrint =  document.getElementById('attributes_AdvertisingPrint').value;
+            
+            if (model.isProductWithPrinting == 'true') {
+                document.getElementById('rowAdvertisingPrint').style.display = '';
+                /*document.getElementById('buttonPrint').style.display = '';*/
+                if (attributes_AdvertisingPrint == 'Y' || attributes_AdvertisingPrint == '')
+                    document.forms.cart_quantity.advertisingPrint[1].checked = true;
+						
+            /*document.getElementById('yesPrint').className = 'printbutton_select';
+						document.getElementById('noPrint').className = 'printbutton';*/
+            } else {
+                document.getElementById('rowAdvertisingPrint').style.display = 'none';
+            /*document.getElementById('buttonPrint').style.display = 'none';*/
+            }
+  				
+            if (model.isProductWithoutPrinting == 'true') {
+                document.getElementById('rowNoAdvertisingPrint').style.display = '';
+                //document.getElementById('buttonNoPrint').style.display = '';
+                if (attributes_AdvertisingPrint == 'N' || attributes_AdvertisingPrint == '')
+                    document.getElementById('noAdvertisingPrint').checked = true;
+            //document.getElementById('noPrint').className = 'printbutton_select';
+            //document.getElementById('yesPrint').className = 'printbutton';
+            } else {
+                document.getElementById('rowNoAdvertisingPrint').style.display = 'none';
+                //  					document.getElementById('das1').style.display = 'none';
+                document.getElementById('advertisingPrint').checked = true;
+            /*document.getElementById('inner11').style.display = 'none';
+					document.getElementById('inner12').style.height = '30px';*/
+					
+            //document.getElementById('buttonNoPrint').style.display = 'none';
+					
+            //document.getElementById('yesPrint').className = 'printbutton_select';
+            //document.getElementById('noPrint').className = 'printbutton';
+            }	
+					
+			
+            // view price table {  	  					  							
+            // quantity header
+            var table = document.createElement("table");
+            try {
+                table.style.setAttribute('cssText', 'background: #CCCCCC; float: none;', 0);
+            } catch (e) {
+                table.setAttribute("style", "background: #CCCCCC; float: none;");
+            }
+				
+            tablebody = document.createElement("tbody");
+            tablebody.setAttribute("align", "right");
+            tablebody.setAttribute("cellpadding", "1");
+            tablebody.setAttribute("cellspacing", "1");
+            table.appendChild(tablebody);
+	  				
+            tr = document.createElement("tr");
+		  				
+            td1 = document.createElement("td");
+            b = document.createElement("b");
+            td1.setAttribute("class", "main");
+            td1.setAttribute("className", "main");
+            try {
+                td1.style.setAttribute('cssText', 'background: #EEEEEE;', 0);
+            } catch (e) {
+                td1.setAttribute("style", "background: #EEEEEE;");
+            }
+				
+            td1.setAttribute("align", "center");
+            td1.setAttribute("width", "80");
+            b.appendChild( document.createTextNode('Menge') );
+            td1.appendChild(b);  				
+            tr.appendChild(td1);
+            // price header  				
+            td2 = document.createElement("td");
+            b = document.createElement("b");
+            td2.setAttribute("class", "main");
+            td2.setAttribute("className", "main");
+					
+            try {
+            //					td2.style.setAttribute('cssText', 'background: #EEEEEE;', 0);
+            } catch (e) {
+                td2.setAttribute("style", "background: #EEEEEE;");
+            }
+				
+            td2.setAttribute("style", "background: #EEEEEE;");
+            td2.setAttribute("align", "center");
+            td2.setAttribute("width", "80");
+            b.appendChild( document.createTextNode('Preis/St.') );							
+            td2.appendChild(b);  				
+            td2.appendChild(document.createElement("br"));
+		  				
+            tr.appendChild(td2);
+            tablebody.appendChild(tr);
+					
+            for (var i = 0; i < model.quantities.length; i++) {
+                tr = document.createElement("tr");
+                td1 = document.createElement("td");
+                td1.setAttribute("class", "main");
+                td1.setAttribute("className", "main");
+                td1.setAttribute("align", "right");
+                try {
+                //							td1.style.setAttribute('cssText', 'padding-right: 5px;', 0);
+                } catch (e) {
+                    td1.setAttribute("style", "padding-right: 5px;");
+                }
+                td1.innerHTML = model.quantities[i];
+                tr.appendChild(td1);
+						
+                td2 = document.createElement("td");
+                td2.setAttribute("class", "main");
+                td2.setAttribute("className", "main");
+                td2.setAttribute("align", "center");
+                td2.innerHTML = model.prices[i];
+                tr.appendChild(td2);
+                tablebody.appendChild(tr);
+            }
+		  				
+
+	  			
+
+            // } view price table
+
+            if (!document.getElementById('noAdvertisingPrint').checked) {
+                refreshOptions(); 
+            } else {
+                getAdvertisingPrint();
+//                calculatePrice();
+            }
+
+        }	
+    });
+}
+	
+function refreshOptions() {
+    if (refreshObj && !refreshObj._complete) refreshObj.transport.abort();	
+    
+    refreshObj = new Ajax.Request('attribute/product_info_ajax.php', {
+        method: 'post',
+        asynchronous: false,
+        parameters: {
+            action: 'refreshOptions',
+            products_id: $('#products_id').attr("value"),
+            data: document.getElementById('attributes_arrProductattributes').value /*<?php echo json_encode($arrProduct['attributes']); ?>*/
+        },
+        onSuccess: function(transport) {  		
+            var newdiv = document.createElement("div");
+            newdiv.innerHTML = transport.responseText;
+		
+            //$('options').innerHTML = '';
+            document.getElementById('options').innerHTML ='';
+            document.getElementById('options').appendChild(newdiv);
+		
+            //$('options').innerHTML = transport.responseText;
+            generatePromotionals();
+        }
+    });
+}
+	
+/* generate select boxes for each promotional position */
+function generatePromotionals() {
+    if (generateObj && !generateObj._complete) generateObj.transport.abort();
+    generateObj = new Ajax.Request('attribute/product_info_ajax.php', {
+        method: 'post',
+        asynchronous: false,
+        parameters: {
+            action: 'generatePromotionals',
+            products_id: $('#products_id').attr("value"),
+            products_options_values_id: $('#3').attr("value"), 
+            data: document.getElementById('attributes_arrProductattributes').value,/*<?php echo json_encode($arrProduct['attributes']); ?>*/ 
+            formdata: $('#cart_quantity').serialize()
+        },
+
+        onSuccess: function(transport) {				
+            document.getElementById('promotional_positions').innerHTML = transport.responseText;	
+
+            calculatePrice();
+            if (document.getElementById('divAdvertisingPrint').style.display == 'none') {				
+                //new Effect.BlindDown($('#divAdvertisingPrint'));
+                $("#divAdvertisingPrint").slideDown('normal');
+            //document.getElementById('divAdvertisingPrint').style.display = 'block';
+            }
+        }
+    });
+		
+}
+function hand(){
+    $('#input').attr("value", "hand");
+}
+/* calculate price */
+function calculatePrice() {
+    /*if (calculateObj && !calculateObj._complete) calculateObj.transport.abort();*/
+ 	temp_quantity1 = $('#quantity1').attr("value"); 
+
+    if ($('#input').attr("value") == 'minimum' || $('#quantity1').attr("value") == '') {
+        $('#quantity1').attr("value", "");
+        document.getElementById('minimumrow').style.display = '';
+			
+    } else {
+        document.getElementById('minimumrow').style.display = '';
+
+    }
+    
+    var formdata = $('#cart_quantity').serialize(true);
+
+    if($('#input').attr("value") == 'minimum' || ( $('#input').attr("value") == 'hand' && temp_quantity1 != '' && temp_quantity1 >0) ){ 
+        calculateObj = new Ajax.Request('attribute/product_info_ajax.php', {
+            method: 'post', 
+            parameters: formdata,
+            asynchronous: false,
+            onSuccess: function(transport) {
+                var model = transport.responseText.evalJSON();
+                //$('price_calculation').innerHTML = model.table;
+                document.getElementById('price_calculation').innerHTML = model.table;
+                document.getElementById('nettobetrag').innerHTML = model.netamount;
+ 
+                //            document.getElementById("price_brutto").innerHTML = document.getElementById("get_price_brutto").innerHTML;
+                //            document.getElementById("price_brutto").innerHTML = document.getElementById("netsum_0").innerHTML;
+                document.getElementById("price_brutto").innerHTML = $('#netsum_0').val();
+                $('.nettobetrag').css('display', 'none'); 
+//                if($('#quantity1').attr("value") == '' || $('#quantity1').attr("value") <= 0 /*|| $('#quantity1').attr("value") < model.minQuantity*/){
+                    $('#quantity1').attr("value", model.quantity);
+//                }
+                $('#error_count').css("display",'none');	
+            }
+        });
+    }
+}
+	
+        
+        
+        /* calculate price */
+	function _calculatePrice() {
+		/*if (calculateObj && !calculateObj._complete) calculateObj.transport.abort();*/
+		
+		if ($('#input').attr("value") == 'minimum' || $('#quantity1').attr("value") == '') {
+			$('#quantity1').attr("value", "");
+			//document.getElementById('quantity1').value="";
+			document.getElementById('minimumrow').style.display = '';
+			
+		} else {
+			document.getElementById('minimumrow').style.display = '';
+
+		}
+
+		var formdata = $('#cart_quantity').serialize(true);
+		
+		calculateObj = new Ajax.Request('attribute/product_info_ajax.php', {
+			method: 'post',
+                        asynchronous: false,
+			parameters: formdata,
+  			onSuccess: function(transport) {
+				var model = transport.responseText.evalJSON();
+				//$('price_calculation').innerHTML = model.table;
+				document.getElementById('price_calculation').innerHTML = model.table;
+				document.getElementById('nettobetrag').innerHTML = model.netamount;
+				$('#quantity1').attr("value", model.quantity);
+			
+				
+  			}
+		});
+	}
+	
+	
+/* show advertising print or not */
+function getAdvertisingPrint() {
+    if (document.getElementById('noAdvertisingPrint').checked) {
+        calculatePrice();
+        //new Effect.BlindUp(document.getElementById('divAdvertisingPrint'));
+        //document.getElementById('divAdvertisingPrint').style.display='none';
+        $("#divAdvertisingPrint").slideUp('normal');
+    } else {
+        refreshOptions();
+    }
+}
+	
+/* refresh promotional positions, if selection changed */
+function refreshPosition(select) {
+	
+    if (refreshPosObj && !refreshPosObj._complete) refreshPosObj.abort();
+	
+    new Ajax.Request('attribute/product_info_ajax.php', {
+        method: 'post',
+        asynchronous: false,
+        parameters: {
+            action: 'refreshPosition',
+            products_id: $('#products_id').attr("value"),
+            select_id: select.id,
+            select_value: select.value
+        },
+        onSuccess: function(transport) {  				
+            var connections = transport.responseText.evalJSON();
+  				
+            var arrSelect = select.id.split("_"); 
+            var position = arrSelect[1];
+  				
+            for (var id in connections) {
+                var selectbox = document.getElementById("pos_" + position + "_" + id);
+                selectbox.innerHTML = '';
+  					
+                for (var i = 0; i < connections[id].length; i = i + 2) {
+                    selectbox.options[selectbox.length] = new Option(connections[id][i+1], connections[id][i]);
+                }
+            }
+  				
+            calculatePrice();
+        }
+    });
+}
+
+	
+/* button show advertising print or not */
+function getButtonPrint(id) {		
+    if(document.getElementById(id).value=='N'){		
+        document.getElementById(id).className='printbutton_select';
+        document.getElementById('yesPrint').className='printbutton';
+        document.cart_quantity.advertisingPrint[0].checked = true;
+        getAdvertisingPrint();
+    }
+    else {
+        document.getElementById(id).className='printbutton_select';
+        document.getElementById('noPrint').className='printbutton';
+        document.cart_quantity.advertisingPrint[1].checked = true;
+        getAdvertisingPrint();
+    }
+}
+
+	
+function setQuantity(btn) { 
+    $('#error_count').css("display",'none'); 
+
+    if($('#quantity1').attr("value") == 0 || $('#quantity1').attr("value") =='' ||  $('#printprice').attr("value") ==0){
+        $('#error_count').css("display",'');
+        return false;
+    }   
+         
+      
+    if( document.getElementById('productprice_0') == null){
+        $('#error_count').css("display",'');
+        return false;
+    }
+    var calprice = 0;
+ 
+    if(btn == 0) {
+        document.getElementById('amountToBasket').value = document.getElementById('quantity1').value;			
+        document.getElementById('inptxt_variantdetails').innerHTML = renderOutput(1);
+        document.getElementById('product_price').value = document.getElementById('productprice_0').value;
+        document.getElementById('inptxt_prices').value = document.getElementById('grandsum_0').value;
+        document.getElementById('pricetab').value = getCalculationTable("1");
+			
+
+    }
+		
+    document.getElementById('selectedvariante').value = document.getElementById('inptxt_variantdetails').innerHTML;
+    calprice = document.getElementById('inptxt_prices').value;
+    calprice = calprice.replace(".", "");
+    document.getElementById('calprice').value = calprice;
+    document.getElementById('pro_price').value = document.getElementById('product_price').value;
+    document.getElementById('manufactureid').value = document.getElementById('manufacture_id').value;
+    document.cart_quantity.submit();
+}
+	
+
+	
+function printProduct(btn) {
+    //		var calprice = 0;
+    //		var productid=$('#productid').attr("value");
+    //		
+    //		if(btn == 0) {
+    //			var qty=$('#quantity1').attr("value");
+    //			document.getElementById('inptxt_variantdetails').innerHTML = printOutput(1);
+    //			var pricetab = getCalculationTable("1");			
+    //			var grandsum = $('#grandsum_0').attr("value");
+    //			var productprice = $('#productprice_0').attr("value");
+    //			
+    //			
+    //		}
+    //		if(btn == 1) {
+    //			var qty=$('#quantity1').attr("value");
+    //			document.getElementById('inptxt_variantdetails').innerHTML = printOutput(2);
+    //			var pricetab = getCalculationTable("2");
+    //			var grandsum = $('#grandsum_1').attr("value");
+    //			var productprice = $('#productprice_1').attr("value");
+    //		}
+    //		if(btn == 2) {
+    //			var qty=$('#quantity3').attr("value");
+    //			
+    //			document.getElementById('inptxt_variantdetails').innerHTML = printOutput(3);
+    //			var pricetab = getCalculationTable("3");
+    //			var grandsum = $('#grandsum_2').attr("value");
+    //			var productprice = $('#productprice_1').attr("value");
+    //		}
+    //				
+    //		var productoption = document.getElementById('inptxt_variantdetails').innerHTML;
+    //		calprice = grandsum;
+    //		var calprice = calprice.replace(/�/gi, "");
+    //		calprice = calprice.replace(".", "");
+    //		var manufactureid  = document.getElementById('manufacture_id').value;
+    //
+    //		window.open('attribute/print_product_1.php?productid='+productid+"&qty="+qty+"&calprice="+calprice+"&productoption="+productoption+"&pricetab="+pricetab+"&productprice="+productprice+"&manufactureid="+manufactureid,'popup','toolbar=no,width=850,height=700,top=0,left=10,scrollbars=1')
+    //
+    var formdata = $('#cart_quantity').serialize(true);
+		 
+    calculateObj = new Ajax.Request('attribute/print_product.php', {
+        method: 'post',
+        asynchronous: false,
+        parameters: formdata,
+        onSuccess: function(transport) {
+            my_window = window.open('','popup','toolbar=no,width=850,height=700,top=0,left=10,scrollbars=1')
+            my_window.document.write(transport.responseText);
+            my_window.print();
+        }
+    });
+}
+	
+function getCalculationTable(element) {
+    var out="";
+    var caldiv = document.getElementById("price_calculation");
+    caldiv = caldiv.getElementsByTagName("table");
+		
+    caldiv = caldiv[0].getElementsByTagName("tr");
+    trcnt = caldiv.length-3;
+    for(i=1;i<trcnt;i++){
+        caltd = caldiv[i].getElementsByTagName("td");
+        out += caltd[0].innerHTML + ' : ' + caltd[element].innerHTML + "__";
+    }
+    return out;
+/*caldiv = caldiv.getElementByTagName("tr");*/
+}
+	
+function renderOutput(con) {
+    var output = "",
+        artCost = getArtikelContent() || "",
+        atrCont = getAttributeContent() || "";
+    output += artCost;
+    output += "*#*" + atrCont;
+		
+    if(document.getElementById('advertisingPrint').checked == true) {
+        var werdc = getWerbeDruckContent() || "",
+            werdp = getWerbeDruckPosition() || "";
+        output += "*#*" + werdc;
+        output += "*#*" + werdp;
+    }
+    else {
+        output += "*#*";
+        output += "*#*";
+    }
+    var adcont = getAdditonalOptionsContent() || "";
+    output += "*#*" + adcont;
+    return output;	
+}
+	
+function printOutput(con) {
+    var output = "";
+    output += getArtikelContent();
+    /* //alert(getAttributeContent());*/
+    output += "*__*" + getAttributeContent();
+    if(document.getElementById('advertisingPrint').checked == true) {
+        output += "*__*" + getWerbeDruckContent();
+        output += "*__*" + getWerbeDruckPosition();
+    }
+    else {
+        output += "*__*";
+        output += "*__*";
+    }
+    output += "*__*" + getAdditonalOptionsContent();
+    return output;	
+}
+
+function getArtikelContent() {
+    var output = "";
+    var artdiv = document.getElementById('article_calculation_box');
+    artdiv = artdiv.getElementsByTagName("table");
+    if (artdiv.length > 0) {
+        artdiv = artdiv[0].getElementsByTagName("tr");
+
+        if (artdiv.length > 2) {
+
+            artdiv = artdiv[2].getElementsByTagName("td");
+
+            artdivs = artdiv[0].getElementsByTagName("label");
+
+            output = artdivs[0].innerHTML;
+
+            artdivs = artdiv[1].getElementsByTagName("select");
+
+            output += " " + artdivs[0].options[artdivs[0].selectedIndex].text;
+            return output;
+        }
+    }
+    else {
+        return "";
+    }
+}
+
+function getAttributeContent() {
+    var output = "";
+    var attdiv = $("#attributes");
+    if (attdiv.children().size() > 0) {
+        divinner = attdiv.children();
+        for (i = 0; i < divinner.size(); i++) {
+            var label = $(divinner[i]).children("label");
+            labtext = label.text() || "";
+            output += labtext + " ";
+
+            select = $(divinner[i]).children("select");
+            selecttext = select.children("option:selected").text() || "";
+            output += selecttext + "__";
+        }
+        output = output.substr(0, output.length - 2);
+        //alert(output);
+        return output;
+    }
+
+}
+	
+function getWerbeDruckContent() {
+    var output="";
+    var werdiv = document.getElementById("div_advertising_print") ;
+    werdiv = werdiv.getElementsByTagName("table");
+    for(i=0;i<=0;i++){
+        werdivtr = werdiv[i].getElementsByTagName("tr");
+        for(j=0;j<werdivtr.length;j++){
+            werdivtd = werdivtr[j].getElementsByTagName("td");
+            for(k=0;k<werdivtd.length;k++) {
+					
+                artsel = werdivtd[k].getElementsByTagName("select");
+                if(artsel.length > 0) {
+                    output += artsel[0].options[artsel[0].selectedIndex].text + "__";
+                }
+                else {
+                    output += werdivtd[k].innerHTML + " ";
+                }
+					
+            }
+        }
+    }
+    output = output.substr(0,output.length-2);
+    return output;
+		
+		
+}
+	
+function getWerbeDruckPosition() {
+    var output="";
+    var werdiv = document.getElementById("promotional_positions") ;
+
+    var additionalZusatzdruck=0;
+    var additional_id=0;
+    werdiv = werdiv.getElementsByTagName("table");
+    for(i=0;i<werdiv.length;i++){
+        werdivtable = werdiv[i].getElementsByTagName("table");
+		
+        werdivtr = werdiv[i].getElementsByTagName("tr");
+        for(j=0;j<werdivtr.length;j++){
+            werdivtd = werdivtr[j].getElementsByTagName("td");
+            for(k=0;k<werdivtd.length;k++) {
+					
+                artsel = werdivtd[k].getElementsByTagName("select");
+                if(artsel.length > 0) {
+
+                    output +=artsel[0].options[artsel[0].selectedIndex].value+",";
+                    output += artsel[0].options[artsel[0].selectedIndex].text + "__";
+                }
+                else {
+                    ckkbox = werdivtd[k].getElementsByTagName("input");
+
+                    if(ckkbox.length > 0){
+                        if(ckkbox[0].checked) {
+                            output += "";
+								
+                            //								var additional_id = parseInt(document.getElementById("additionalZusatzdruck").value)+parseInt(additionalZusatzdruck);
+								 
+                            output += additional_id+",__";
+                                                                
+                            //alert(document.getElementById("additionalZusatzdruck").value);
+                            //alert(ckkbox[0].value);
+                            additionalZusatzdruck++;
+								
+								
+                        }
+                        else {
+                            output += "";
+                            additionalZusatzdruck++;
+                        }
+                    }
+                    else {
+                    // output += werdivtd[k].innerHTML + " ";
+                    }
+                }
+					
+            }
+        }
+        output += "::";
+    //                        alert(output);
+    }
+                
+
+    output = output.substr(0,output.length-2);
+    output = output.replace(/Drucklackierung: /gi, "Drucklackierung");
+
+    //38,Lasergravur__16,1-farbig__20,Motiv A__::15,Siebdruck__17,2-farbig__21,Motiv B__::16,1-farbig__20,Motiv A
+        
+    /*alert(output);*/
+    return output;
+}
+	
+function getAdditonalOptionsContent() {
+    var output ="";
+    var aodiv = document.getElementById("div_addtional_option");
+    if(aodiv.innerHTML.length > 0) {
+        aodiv = aodiv.getElementsByTagName("tr");
+        for(i=0;i<aodiv.length;i++){
+            aodivtd = aodiv[i].getElementsByTagName("td");
+            chkbox = aodivtd[1].getElementsByTagName("input");
+            if(chkbox[0].checked) {
+                output +=  aodivtd[0].innerHTML + "__";
+            }
+        }
+        output = output.substr(0,output.length-2);
+        return output;
+    }
+		
+		
+}
+        
+jQuery(document).ready(function() {    
+    updateData();		
+    getAdvertisingPrint();
+    //load data for musterkorb
+      musterkorb_updateData();
+});
+	
+function browserDetectNav(chrAfterPoint)
+{
+    var
+    UA=window.navigator.userAgent,        
+    //--------------------------------------------------------------------------------
+    OperaB = /Opera[ \/]+\w+\.\w+/i,     //
+    OperaV = /Version[ \/]+\w+\.\w+/i,   //
+    FirefoxB = /Firefox\/\w+\.\w+/i,      
+    ChromeB = /Chrome\/\w+\.\w+/i,       //
+    SafariB = /Version\/\w+\.\w+/i,      //
+    IEB = /MSIE *\d+\.\w+/i,             //
+    SafariV = /Safari\/\w+\.\w+/i,       //
+    //--------------------------------------------------------------------------------
+    browser = new Array(),                
+    browserSplit = /[ \/\.]/i,            
+    OperaV = UA.match(OperaV),
+    Firefox = UA.match(FirefoxB),
+    Chrome = UA.match(ChromeB),
+    Safari = UA.match(SafariB),
+    SafariV = UA.match(SafariV),
+    IE = UA.match(IEB),
+    Opera = UA.match(OperaB);
+            
+    //----- Opera ----
+    if ((!Opera=="")&(!OperaV=="")) browser[0]=OperaV[0].replace(/Version/, "Opera")
+    else
+    if (!Opera=="") browser[0]=Opera[0]
+    else
+    //----- IE -----
+    if (!IE=="") browser[0] = IE[0]
+    else
+    //----- Firefox ----
+    if (!Firefox=="") browser[0]=Firefox[0]
+    else
+    //----- Chrom ----
+    if (!Chrome=="") browser[0] = Chrome[0]
+    else
+    //----- Safari ----
+    if ((!Safari=="")&&(!SafariV=="")) browser[0] = Safari[0].replace("Version", "Safari");
+             
+            
+    var
+    outputData;                                       
+             
+    if (browser[0] != null) outputData = browser[0].split(browserSplit);
+    if ((chrAfterPoint==null)&&(outputData != null))
+    {
+        chrAfterPoint=outputData[2].length;
+        outputData[2] = outputData[2].substring(0, chrAfterPoint);  
+        return(outputData);
+    }
+    else return(false);
+}

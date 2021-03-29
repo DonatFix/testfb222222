@@ -1,0 +1,49 @@
+var $j = jQuery;
+
+jQuery(document).ready(function () {
+    jQuery("#various3").fancybox({
+        'width': 650,
+        'height': '75%',
+        'autoScale': false,
+        'transitionIn': 'none',
+        'transitionOut': 'none',
+        'type': 'iframe'
+    });
+
+});
+
+
+
+jQuery(document).ready(function () {
+    jQuery('#mycarousel').jcarousel({
+        size: 15,
+        scroll: 1,
+        start: 1,
+        visible: 6,
+        wrap: "circular"
+    });
+});
+
+jQuery(document).ready(function () {
+    jQuery('#mycarousel').width(2000);
+});
+
+
+jQuery(document).ready(function () {
+    jQuery('.navigation_mini a').click(function () {
+        jQuery('#navigation_new').slideToggle();
+        return false;
+    });
+    jQuery('.categMenu i').click(function () {
+        if (jQuery(this).parent().parent().find('.subMenu').length > 0) {
+            jQuery(this).parent().parent().toggleClass('active_subMenu');
+            jQuery(this).parent().parent().children('.subMenu').slideToggle();
+
+            return false;
+        }
+        jQuery(this).parent().toggleClass('active_menu');
+    });
+});
+
+
+ 

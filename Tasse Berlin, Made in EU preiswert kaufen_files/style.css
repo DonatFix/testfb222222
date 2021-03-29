@@ -1,0 +1,326 @@
+/*
+Theme Name: TOXID
+Theme URI: http://www.toxid.org
+Author: Joscha Krug
+Author URI: http://www.marmalade.de
+Template: twentytwelve
+Description: A basic simple theme to integrate WordPress into your Shop. It's based on the WordPress theme Twenty Twelve
+Version: 0.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
+Text Domain: toxid
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+#wp_content { 
+	border-left: 1px solid #E9E9E9;
+width: 715px;
+float: right;
+padding: 0 10px 0 40px;
+}
+
+#wp_content_category,
+#wp_content_archive{
+	border-left: 1px solid #E9E9E9;
+width: 715px;
+float: right;
+padding: 0 10px 0 40px;
+}
+	
+
+#toxid_curl_main article {
+	position: relative;
+	padding:0;
+
+}
+
+.category-article,
+.archive-article{
+padding: 5px 0 30px;
+height: 270px;
+}
+
+.archive-header{
+margin: 0 0 15px 0;
+}
+
+
+.archive-title,
+.category-title{
+font-size: 14px;
+color: #3f78b1;
+font-style: normal;
+font-weight: normal;
+}
+
+
+.entry-title{
+font-size: 24px;
+color: #3f78b1;
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-style: normal;
+font-weight: bold;
+}
+
+
+#toxid_curl_main h1 {
+}
+
+#toxid_curl_main h1 a {
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-size: 20px;
+font-style: normal;
+font-weight: bold;
+color: #3f78b1;
+}
+
+.post h3{
+	font-size: 12px;
+font-weight: bold;
+display: block;
+line-height: 16px;
+color: #3f78b1;}
+
+.widget-area	{
+	width: 260px;
+	float:left;}
+	
+.entry-header{}
+.wp_beitrag_area{
+	
+	border-bottom: 2px solid #DDD;
+	clear:both;
+}
+.category-blog-info,
+.archive-blog-info{
+	color:#777;
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-style: normal;
+font-weight: normal;
+margin: 5px 0;
+line-height: 16px;
+font-size: 12px;
+}
+
+.content-blog-info {
+	color:#777;
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-style: normal;
+font-weight: normal;
+margin: 5px 0 15px 0 ;
+line-height: 16px;
+font-size: 12px;
+}
+.category-blog-info a,
+.archive-blog-info a,
+.content-blog-info a {
+color: #BF975C;
+}
+	
+.archive-entry-content,
+.category-entry-content{ 
+font-style: normal;
+font-weight: normal;
+margin: 10px 0;
+line-height: 16px;
+font-size: 12px;
+}
+
+.readmore{ 
+padding: 0;
+position: absolute;
+left: 245px;
+background: url(img/read.png) no-repeat;
+width: 250px;
+height: 35px;
+}
+
+.readmore:hover, .readmore a:hover { 
+padding: 0;
+position: absolute;
+left: 245px;
+width: 250px;
+height: 35px;
+background: url(img/read_hover.png) no-repeat;
+
+}
+
+.category-entry-content p,
+.archive-entry-content p,
+.entry-content p {
+	font-size: 12px;
+	line-height: 18px;
+	color:#777;
+	}
+.category-entry-content p a,
+.archive-entry-content p a,
+.entry-content p a { 
+	font-size: 12px;
+	font-weight: bold;
+	color: #3f78b1;
+}
+	
+
+.wp_thumbnail{
+	background: url(img/img_back.png) no-repeat;
+-webkit-box-shadow: 0px 1px 5px 3px #DDD;
+box-shadow: 0px 1px 5px 3px #DDD;
+float: left;
+padding: 10px;
+margin: 5px 30px 0 0;
+
+}
+
+.category-tags,
+.archive-tags{
+	left: 0px;
+	top: 30px;
+	position: relative;
+	font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	margin: 5px 0;
+	line-height: 16px;
+	font-size: 12px;
+}
+
+.category-tags a,
+.archive-tags a{
+	color: #3f78b1;
+}
+
+.assistive-text{display:none;}
+.nav-next{
+	color: #BF975C;
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-style: normal;
+font-weight: normal;
+	padding: 10px;
+	float:right;
+	font-size:13px;
+
+}
+.nav-previous {
+	color: #BF975C;
+font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+font-style: normal;
+font-weight: normal;
+	padding: 10px;
+	font-size:13px;
+
+}
+.nav-previous a,
+.nav-next a{
+	color: #BF975C;
+}
+#respond,
+#comments{
+	display:none;
+	margin: 20px 0;
+	border-top: 1px solid #DDD;
+	padding-top: 20px;
+}
+.comment-form-author,
+.comment-form-email,
+.comment-form-url,
+.comment-form-comment{
+	width:250px;
+}
+
+#author, #email, #url, #comment{
+	width:350px;
+}
+
+.wp_inhalt{}
+
+.widget-title{
+	margin: 0 0 5px;
+	font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #3f78b1;
+	font-size: 16px;
+	text-transform: uppercase;
+	width: 250px;
+	line-height: 32px;
+	z-index: 1;
+	position: relative;
+	padding: 0;
+}
+
+.widget_search{
+	margin-bottom: 20px;
+	border-bottom: 4px solid #DDD;
+	width: 240px;
+	height: 90px;
+}
+.Social_Widget{
+	width: 240px;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	border-bottom: 4px solid #DDD;
+}
+.widget_text{
+	width: 240px;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	border-bottom: 4px solid #DDD;
+}
+
+.widget_text p{
+	color:#777;
+	font-size: 12px;
+	text-align:justify;
+}
+
+.widget_categories ul,
+.widget_recent_entries ul,
+.widget_archive ul{
+	line-height: 12px;
+	border-bottom: 4px solid #DDD;
+	width: 220px;
+	font-size: 12px;
+	padding: 10px 0 10px 25px;
+	margin-top: -15px;
+}
+.widget_categories ul li,
+.widget_recent_entries ul li,
+.widget_archive ul li{
+	list-style: disc;
+}
+
+.widget_categories ul li a,
+.widget_recent_entries ul li a,l,
+.widget_archive ul li a
+{
+	color: #777;
+}
+.screen-reader-text{display:none;}
+.search-field{
+	color: #777;
+	width: 170px;
+	border: 1px solid #DDD;
+	background: #fff;
+	padding: 8px 5px;
+	font-size: 12px;
+}
+
+.search-submit{
+	font-weight: bold;
+	border:none;
+	border-radius: 2px;
+	margin-top: 3px;
+	background: #3f78b1;
+	font-family: "PT Sans","Helvetica Neue",Helvetica,Arial,Sans-serif;
+	font-style: normal;
+	color: #FFF;
+	font-size: 12px;
+	text-transform: uppercase;
+	width: 54px;
+	height:32px;
+	z-index: 1;
+	position: relative;
+	padding: 0;
+}

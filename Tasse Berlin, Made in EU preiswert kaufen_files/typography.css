@@ -1,0 +1,167 @@
+body {
+    font: 12px Arial, sans-serif;
+}
+
+select, input, button, textarea, button {
+    font: 12px Arial, sans-serif;
+    cursor:pointer!important;
+}
+
+table {
+}
+
+h1 {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h2, h3, h4, h5 {
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6, b, strong, dt {
+    font-weight: bold;
+}
+
+optgroup {
+    font-weight: normal;
+}
+
+i, em {
+    font-style: italic;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+a {
+    color: #082f52;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul, ol {
+    margin: 25px 30px;
+}
+
+li {
+    padding: 3px 0;
+    list-style: none;
+}
+
+ol li {
+    list-style: decimal;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+ul, ol {
+    margin: 20px 0;
+}
+
+ul ul, ol ul {
+    margin: 10px;
+}
+
+ol li {
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+
+ol ol {
+    list-style: upper-alpha;
+}
+
+ol ol ol {
+    list-style: lower-roman;
+}
+
+ol ol ol ol {
+    list-style: lower-alpha;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li li {
+    list-style: none;
+}
+
+form ul {
+    margin: 0;
+    padding: 0;
+}
+
+form ol {
+    margin: 0;
+    padding: 0;
+}
+
+form li {
+    list-style: none;
+}
+/*price table in list page start */
+.product.details .amprice th {
+    font-size: 6.5pt;
+    font-weight: bold;
+}
+.product.details .amprice td {
+    font-size: 6.5pt;
+    font-weight:normal;
+    padding: 0;
+}
+.product.details .amprice .am {
+    color:#2F50B1;
+    padding-right:10px;
+
+}
+.product.details .amprice .pr {
+    font-weight: bold;
+}
+.am {
+    border:1px solid #41A4D7;
+    text-align:right;
+    color:#2F50B1;
+}
+.pr{
+    border:1px solid #41A4D7;
+    text-align:center;
+    color:#2F50B1;
+    font-weight:bold;
+}
+.amprice th {
+    text-align:center;
+    color:#2F50B1;
+}
+.productpage_details .amprice .pr {
+    font-weight: bold;
+    color:#2F50B1;
+    padding-right:10px;
+}
+span#test_product_artnum {
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:6.5pt;
+    color:#5E5E5E;
+    text-align:left;
+    margin:5px 0px 0px 0px;
+    float:left;
+}
+/*price table in list page end */
+h3#test_catTitle {
+    color:#2F50B1;
+    font-size:9pt;
+}

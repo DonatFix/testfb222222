@@ -1,0 +1,92 @@
+#navigation_new{
+    position:relative;
+    height:52px; 
+    padding:0; 
+    margin: 0;
+    float: left;
+    width: 70%;
+}
+#navigation_new > li{
+    list-style-type:none;
+    float:left;
+    background:url(../../img/sep_bg.png) no-repeat right;
+    height:43px;
+    padding: 0;
+    position: relative
+}
+#navigation_new > li > a{
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap;
+    color:#FFF;
+    text-transform:uppercase;
+    padding:0 19px;
+    display: block;
+    line-height: 43px;
+    height: 43px;
+    text-shadow: 0 1px 1px #666;
+    float: left;
+}
+#navigation_new li ul{
+    display:none;
+    text-align:left;
+    z-index:999;
+    margin:0;
+    padding:0;
+    position: absolute;
+    top: 43px;
+}
+#navigation_new li ul li{
+    list-style-type:none;
+    height:auto!important;
+    margin:0;
+    padding:0 10px 10px 0}
+#navigation_new li ul table{
+    background:#FFF;
+    position:relative!important;
+    z-index:999999!important;
+/*    margin-top:-2.5px;*/
+    height:230px;
+    box-shadow: 0 3px 5px #999999;
+}
+#navigation_new li ul table td{
+    vertical-align:top;
+    padding: 10px 0 10px 10px;
+}
+#navigation_new li ul li a em{
+    color:#09569e;
+    display:inline;
+    width:5px}
+#navigation_new > li:hover a{
+    padding-bottom:39px;
+    z-index:0}
+#navigation_new > li:hover ul{
+    display:block;
+    z-index:9999}
+#navigation_new p{
+    font-size:13px;
+    white-space:nowrap;
+    margin:5px 15px 5px 10px}
+#navigation_new p a{
+    color:#FFF}
+#navigation_new p a.WT_Lay{
+    font-size:12px}
+#navigation_new p a.WT_Lay:hover{
+    text-decoration:underline}
+#navigation_new em{
+    display:block;
+    font-style:normal;
+    margin-left:2px;
+    margin-top:2px;
+    color:#09569e;
+}
+#navigation_new ul li p b a{
+    color:#09569e;
+}
+#navigation_new ul li a{
+    text-decoration:none;
+    color:#4d5062;
+    margin:0;
+    padding:0 3px}
+#navigation_new ul li a:hover{
+    text-decoration:none}

@@ -1,0 +1,386 @@
+function expandcontent(id) {
+  var ids = new Array("related_products", "recomended_products", "rating");
+  var tabids = new Array("tab1", "tab2", "tab3");
+
+  for (var i = 0; i < 3; i++) {
+    if (ids[i] == id) {
+      document.getElementById(ids[i]).style.display = "block";
+      document.getElementById(tabids[i]).className = "state-active";
+    } else {
+      document.getElementById(ids[i]).style.display = "none";
+      document.getElementById(tabids[i]).className = "";
+    }
+  }
+}
+function fnCheckisNumeric(id) {}
+
+function Mbestellen() {
+  var qty = document.getElementById("product_musterqty").value;
+  //var qty = 1;
+
+  var pid = document.getElementById("aid").value;
+
+  var manfid = document.getElementById("manufacture_id").value;
+  var variante = "";
+  var attribute = "";
+  if (
+    document.getElementById("variantin_hidden").value == 1 &&
+    document.getElementById("product_Variante")
+  ) {
+    variante = document.getElementById("product_Variante").value;
+  }
+
+  if (
+    document.getElementById("attributesin").value == 1 &&
+    document.getElementById("product_attributeid")
+  ) {
+    attribute = document.getElementById("product_attributeid").value;
+  }
+
+  xmlHttp = GetXmlHttpObject();
+  if (xmlHttp == null) {
+    alert("Browser does not support HTTP Request");
+    return;
+  }
+  var url = "https://" + document.domain + "/views/muster_ajax.php";
+  url =
+    url +
+    "?qty=" +
+    qty +
+    "&products_id=" +
+    pid +
+    "&variante=" +
+    variante +
+    "&attribute=" +
+    attribute +
+    "&manfid=" +
+    manfid;
+  url = url + "&sid=" + Math.random();
+  xmlHttp.onreadystatechange = musterkorbadded;
+  xmlHttp.open("POST", url, true);
+  xmlHttp.send(null);
+}
+function musterkorbadded() {
+  if (xmlHttp.readyState == 3 || xmlHttp.readyState == "complete") {
+    /*document.getElementById("muster").innerHTML=xmlHttp.responseText 
+		location.reload(true);*/
+    window.location = "https://" + document.domain + "/index.php?cl=musterkorb";
+    console.log();
+  }
+}
+function deleteMusterItem(spid) {
+  var rowID = document.getElementById("rowID_" + spid).value;
+  xmlHttp = GetXmlHttpObject();
+  if (xmlHttp == null) {
+    alert("Browser does not support HTTP Request");
+    return;
+  }
+  var url = "/views/muster_quantitychange.php";
+  url = url + "?rowID=" + rowID + "&spid=" + spid + "&action=delete";
+  url = url + "&sid=" + Math.random();
+  xmlHttp.onreadystatechange = qtychangedone;
+  xmlHttp.open("POST", url, true);
+  xmlHttp.send(null);
+}
+
+function updateMusterkorb(spid) {
+  var qty = document.getElementById("amt" + spid).value;
+  var varianteid = document.getElementById("vaiante_id" + spid).value;
+
+  xmlHttp = GetXmlHttpObject();
+  if (xmlHttp == null) {
+    alert("Browser does not support HTTP Request");
+    return;
+  }
+  var url = "/views/muster_quantitychange.php";
+  url = url + "?qty=" + qty + "&spid=" + spid + "&varianteid=" + varianteid;
+  url = url + "&sid=" + Math.random();
+  xmlHttp.onreadystatechange = qtychangedone;
+  xmlHttp.open("POST", url, true);
+  xmlHttp.send(null);
+}
+
+function qtychangedone() {
+  if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete") {
+    /*document.getElementById("mustermessage").innerHTML=xmlHttp.responseText*/
+
+    location.reload(true);
+  }
+}
+
+function sendMusterbestellung() {
+  var error = 0;
+  var company = document.getElementById("company").value;
+  if (document.getElementById("company").value == "") {
+    document.getElementById("company").className = "inputbox_error";
+    error = 1;
+  } else {
+    document.getElementById("company").className = "inputbox";
+  }
+  var gender = document.getElementById("gender").value;
+  if (document.getElementById("gender").value == "") {
+    document.getElementById("gender").className = "select_error";
+    error = 1;
+  } else {
+    document.getElementById("gender").className = "select";
+  }
+  var firstname = document.getElementById("com_firstname").value;
+  if (document.getElementById("com_firstname").value == "") {
+    document.getElementById("com_firstname").className = "inputbox_error";
+    error = 1;
+  } else {
+    document.getElementById("com_firstname").className = "inputbox";
+  }
+
+  var firstname = document.getElementById("firstname").value;
+  if (document.getElementById("firstname").value == "") {
+    document.getElementById("firstname").className = "inputbox_error";
+    error = 1;
+  } else {
+    document.getElementById("firstname").className = "inputbox";
+  }
+
+  var street = document.getElementById("street").value;
+  if (document.getElementById("street").value == "") {
+    document.getElementById("street").className = "inputbox_error";
+    error = 1;
+  } else {
+    document.getElementById("street").className = "inputbox";
+  }
+  var plz = document.getElementById("plz").value;
+  if (document.getElementById("plz").value == "") {
+    document.getElementById("plz").className = "plz_error";
+    error = 1;
+  } else {
+    document.getElementById("plz").className = "plz";
+  }
+  var city = document.getElementById("city").value;
+  if (document.getElementById("city").value == "") {
+    document.getElementById("city").className = "city_error";
+    error = 1;
+  } else {
+    document.getElementById("city").className = "city";
+  }
+  var email = document.getElementById("email").value;
+  if (document.getElementById("email").value == "") {
+    document.getElementById("email").className = "inputbox_error";
+    error = 1;
+  } else {
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(
+        document.getElementById("email").value
+      )
+    ) {
+      document.getElementById("email").className = "inputbox_error";
+      error = 1;
+    } else {
+      document.getElementById("email").className = "inputbox";
+    }
+  }
+  var telefon = document.getElementById("telefon").value;
+  if (document.getElementById("telefon").value == "") {
+    document.getElementById("telefon").className = "inputbox_error";
+    error = 1;
+  } else {
+    document.getElementById("telefon").className = "inputbox";
+  }
+
+  if (document.getElementById("agb").checked == false) {
+    document.getElementById("agb_box").className = "agb_error";
+    error = 1;
+    var agb = 0;
+  } else {
+    document.getElementById("agb_box").className = "agb";
+    var agb = 1;
+  }
+  error = 0;
+  if (error == 0) {
+    /*return true;*/
+    if (document.getElementById("muster_comments").value == "") {
+      var comments = "";
+    } else {
+      var comments = document.getElementById("muster_comments").value;
+    }
+    var com_firstname = document.getElementById("com_firstname").value;
+    var com_name = document.getElementById("com_name").value;
+    var com_street = document.getElementById("com_street").value;
+    xmlHttp = GetXmlHttpObject();
+    if (xmlHttp == null) {
+      alert("Browser does not support HTTP Request");
+      return;
+    }
+
+    var url =
+      "&company=" +
+      escape(company) +
+      "&gender=" +
+      escape(gender) +
+      "&firstname=" +
+      escape(firstname) +
+      "&street=" +
+      escape(street) +
+      "&plz=" +
+      escape(plz) +
+      "&city=" +
+      escape(city) +
+      "&email=" +
+      escape(email) +
+      "&telefon=" +
+      escape(telefon) +
+      "&comments=" +
+      escape(comments) +
+      "&com_firstname=" +
+      escape(com_firstname) +
+      "&com_name=" +
+      escape(com_name) +
+      "&com_street=" +
+      escape(com_street) +
+      "&agb=" +
+      escape(agb);
+
+    $.ajax({
+      url:
+        "/index.php?cl=contact&fnc=send_musterbestellung&sid=" +
+        Math.random() +
+        url,
+      type: "GET",
+      contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
+      success: function(result) {
+        $(".error_muster").remove();
+        obj = $.parseJSON(result);
+        if (obj.success == "ok") {
+          $("#content_product").empty();
+          $("#content_product").append(
+            '<div class="thanksmessage">Ihre Bestellung ist unterwegs - vielen Dank!</div>'
+          );
+        }
+        if (obj.error == "ok") {
+          a = obj.errors;
+          for (var p in a) {
+            var ret =
+              '<div class="error_muster" style="color:#FF0000;">* ' +
+              a[p] +
+              "</div>";
+            if (p == "agb") {
+              $("#" + p + "").after(ret);
+            } else {
+              $("#" + p + "+.req").after(ret);
+            }
+          }
+        }
+      },
+      error: function() {
+        alert("error");
+      }
+    });
+  }
+}
+
+function stateChanged2() {
+  if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete") {
+    window.location.href = "index.php/?cl=musterkorb&success=1";
+    document.getElementById("wishlist").innerHTML = xmlHttp.responseText;
+    document.getElementById("shippingform").innerHTML = "";
+  }
+}
+
+function GetXmlHttpObject() {
+  var xmlHttp = null;
+  try {
+    // Firefox, Opera 8.0+, Safari
+    xmlHttp = new XMLHttpRequest();
+  } catch (e) {
+    //Internet Explorer
+    try {
+      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  }
+  return xmlHttp;
+}
+/* update text and images of the product for the models */
+
+function musterkorb_updateData() {
+  products_id = $("#product_Variante").val();
+  //    products_id = 569527;
+
+  //    if (updateObj && !updateObj._complete) updateObj.transport.abort();
+
+  updateObj = new Ajax.Request("attribute/product_info_ajax.php", {
+    method: "post",
+    parameters: {
+      action: "musterkorb_updateData",
+      products_id: products_id
+    },
+    onSuccess: function(transport) {
+      var model = transport.responseText.evalJSON();
+      // get name and version brousers
+      var browser = browserDetectNav();
+
+      // get the options
+      document.getElementById("musterkorb_product_attribute").innerHTML = "";
+      var table = document.createElement("table");
+      //            table.setAttribute("border", "0");
+      //            table.setAttribute("cellspacing", "0");
+      //            table.setAttribute("cellpadding", "2");
+      table.setAttribute("width", "100%");
+
+      var tbody = document.createElement("tbody");
+      table.appendChild(tbody);
+
+      for (var i = 0; i < model.attributes.length; i++) {
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+
+        a = document.createElement("a");
+        a.setAttribute("style", "float: left;");
+        a.setAttribute(
+          "href",
+          "javascript:popupInformation('" + model.attributes[i][1] + "');"
+        );
+
+        td1.setAttribute("width", "170");
+        //                td1.setAttribute("style", "padding-top:5px;");
+        td1.appendChild(document.createTextNode(model.attributes[i][0] + ":"));
+        //                td2.setAttribute("align", "left");
+        if (browser[0] == "MSIE" && browser[1] >= 9) {
+          var select = document.createElement("select");
+        } else {
+          var select =
+            document.all && !window.opera
+              ? document.createElement(
+                  '<select id="product_attributeid" name="product_attributeid" ></select>'
+                )
+              : document.createElement("select");
+        }
+        /*var select =  document.createElement("select");*/
+
+        //                select.name = 'id[' + model.attributes[i][1] + ']';
+        //                select.id = 'farbe';
+        select.name = "product_attributeid";
+        select.id = "product_attributeid";
+        //                select.setAttribute("width", "130px");
+        //					 console.log(model.attributes)
+        for (var j = 0; j < model.attributes[i][2].length; j++) {
+          var option = new Option(
+            model.attributes[i][2][j][1],
+            model.attributes[i][2][j][1]
+          );
+          select.options[select.length] = option;
+        }
+        td2.appendChild(select);
+        //                td2.innerHTML += "<a class=\"info_icon\" href=\"javascript:popupInformation('" + model.attributes[i][1] + "');\"><img src=\"out/azure_zinit/img/info_img.png\" border=\"0\"></a>";
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tbody.appendChild(tr);
+      }
+
+      document
+        .getElementById("musterkorb_product_attribute")
+        .appendChild(table);
+    }
+  });
+}

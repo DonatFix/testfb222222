@@ -1,0 +1,167 @@
+.shadow, #currencies, #languages, .loginForm, .altLoginBox, .flyoutMenu {
+    -moz-box-shadow: 0 0 5px #999;
+    -webkit-box-shadow: 0 0 5px #999;
+    box-shadow: 0 0 5px #999;
+}
+/*** GRADIENTS -> ***/
+/*.itemSlider .prevItem, .itemSlider .nextItem{
+    background:#ABD6ED;
+}*/
+.FXgradBlue,.gridView .titleBox,.gridView .priceBox, .box h3, .box h2, .sectionHead, #currencies a.selected, #languages a.selected, .flyoutMenu a.selected, .dropDown a.selected, .thumbNav a.cur, .thumbNav a.cur:hover, .promoBox strong.promoPrice, .specBox h3{
+    background:#41A4D7;
+}
+.FXgradBlueLight,
+.lightHead,
+h2.lightHead,
+h3.lightHead {
+    background:#41A4D7;
+}
+
+.FXgradBlueDark {
+    background: #A8DAF3;
+
+}
+.linkbtn{
+    background:none;
+    color:#00539F;
+    font-weight:bold;
+    text-align:left;
+    line-height: 12px;
+    height: 15px;
+    padding:0;
+}
+.submitButton_large{
+    background:url(../../img/detailwar.png) no-repeat;
+    padding:7px 10px 13px 0px;
+    width:198px;
+    text-transform: uppercase;
+    margin-top:10px;
+    text-align:center;
+    font-weight:normal;
+    border:0px;
+    font-size:14px;
+    margin-left:10px;
+}
+.bton{
+    /*    background:url(../../img/btn_default.png) no-repeat;*/
+    background: rgb(249,249,250); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(249,249,250,1) 0%, rgba(236,237,241,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(249,249,250,1) 0%,rgba(236,237,241,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(249,249,250,1) 0%,rgba(236,237,241,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9fa', endColorstr='#ecedf1',GradientType=0 ); /* IE6-9 */
+    width:124px;
+    height:38px;
+    font-weight:normal;
+    font-size:12px;
+    line-height: 38px;
+    color: #4d5062;
+    border: none;
+    text-align: center !important;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: 0 1px 2px #ccc;
+    -moz-box-shadow: 0 1px 2px #ccc;
+    box-shadow: 0 1px 2px #ccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.submitButton_large p{
+    margin-left:-12px;
+    color:#FFF;}
+.submitButton_extralarge{
+    background:url(../bg/button_large.png) no-repeat;
+    padding:7px 0 7px 0px;
+    width:265px;
+    text-transform: uppercase;
+    margin-top:10px;
+    text-align:center;
+    font-weight:normal;
+    font-size:13px;
+}
+#userChangeAddress{}
+.submitButton {
+    /*    background:url(../../img/btn_kateg.png) no-repeat;*/
+    background: rgb(92,162,226); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(92,162,226,1) 0%, rgba(1,84,160,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(92,162,226,1) 0%,rgba(1,84,160,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(92,162,226,1) 0%,rgba(1,84,160,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5ca2e2', endColorstr='#0154a0',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #0062bb;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 1px 0 rgba(255, 255, 255, 0.4) inset;
+    -moz-box-shadow: 0px 1px 0 rgba(255, 255, 255, 0.4) inset;
+    box-shadow: 0px 1px 0 rgba(255, 255, 255, 0.4) inset;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width:auto;
+    height:32px;  
+    font-weight:normal;
+    font-size:12px;
+    line-height: 27px;
+    color: #FFFFFF;
+    padding: 0 25px;
+    /*padding:  22px;*/
+}
+.submitButton1{
+    background:url(../../img/button_small.jpg) no-repeat;
+    text-align:center;
+    font-weight:normal;
+    padding:7px 0 7px 0px;
+    border:none;
+    width:140px;
+    color:#FFFFFF;
+    font-size:13px;
+}
+.FXgradGrey, .promoBox strong.promoTitle, .specBoxTitles a.title {
+    background : url(../bg/svg/grad_grey.svg) #d1d8db;
+} 
+.FXgradGreyLight,
+.sf-menu li ul,
+#footer #panel,
+.box ul,
+.box ol,
+.box .content,
+.loginForm,
+#currencies a,
+#languages a,
+.flyoutMenu a,
+.basketFlyout,
+div.anythingSlider .arrow,
+.thumbNav{
+}
+
+/* Orange .featuredList li.articleImage:hover + li.articleTitle > a, .featuredList a:hover,
+*/
+.FXgradOrange,
+.removeButton,
+.sf-menu li.sfHover, .sf-menu li:hover,
+.gridView div.priceBox:hover,
+.gridView div.titleBox:hover,
+#currencies a:hover,
+#languages a:hover,
+.flyoutMenu a:hover,
+.basketFlyout li a:hover,
+.dropDown ul a:hover,
+/*div.anythingSlider span.arrow:hover,
+.thumbNav a:hover,
+.slideNav:hover,*/
+a.viewAllHover,
+.itemSlider li a.viewAllHover,
+.specBoxTitles a.title:hover,
+.actionLinks li:hover {
+    /*background:#95CCEA;*/
+}
+/******/
+.FXgradGreyLight, .sf-menu li ul, #footer #panel, .box ul, .box ol, .box .content, .loginForm, #currencies a, #languages a, .flyoutMenu a, .basketFlyout, div.anythingSlider .arrow{
+    background: -moz-linear-gradient(center top , #FFFFFF, #D1D8DB) repeat scroll 0 0 transparent;
+}
+/*.thumbNav{
+    background-color: #126ABA;
+}*/
+.thumbNav li a.cur{
+    background: #41a4d7;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
